@@ -217,5 +217,41 @@
 				\item Die Konvergenz des Verfahrens wird dann linear anstelle von quadratisch
 				\item Für die Matrix $A$ kann im ersten Schritt eine LR-Zerlegung errechnet werden, welche dann immer weiter genutzt werden kann
 			\end{itemize}	
+	\end{enumerate}
+
+\section{Vorlesung 7}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Formulieren Sie die Fragestellung der Polynominterpolation.
+			\begin{itemize}
+				\item Gegeben sind $N+1$ paarw. verschiedene Stützstellen $(x_0, f(x_0)), \dots (x_N, f(x_N))$
+				\item Wir suchen ein Polynom $p$ mit $deg(p) \leq N$ mit $p(x_i) = f(x_i)$ für alle $i \in (0, N)$
+			\end{itemize}
+		\item Begründen Sie, warum das Problem der Polynominterpolation eine eindeutige Lösung besitzt
+			\begin{itemize}
+				\item Ein Polynom $p$ mit $deg(p) \leq N$ ist durch $N+1$ Stützstellen exakt definiert
+				\item Bsp.: Eine Gerade aus $\mathbb{P}^1$ ist durch 2 Punkte exakt definiert
+			\end{itemize}	
+		\item Vollziehen Sie nach, welche Größe als Maß für die Kondition des Problems gilt und warum Interpolationspolynome von hohem Grad zumindest bei äquidistanten Stützstellen mit Vorsicht zu genießen sind.
+			\begin{itemize}
+				\item Das Maß für die Kondition der Interpolation ist die Lebesque-Konstante: $\Lambda_N := max_{x \in [a,b]} \sum_{n=0}^N |L_n(x)|$
+				\item Die Lebesque-Konstante misst die Auswirkung von Störungen der Stützstellen $(x_0, \tilde{f}(x_0)), \dots (x_N, \tilde{f}(x_N))$ und dem gestörten Interpolationspolynom $\tilde{p}$
+				\item $|p(x) - \tilde{p}(x)| = |\sum (f_n - \tilde{f}_n) L_n(x)| \\
+					\leq \sum |(f_n - \tilde{f}_n)| |L_n(x)| \\
+					\leq max_{n=0 \dots N} |(f_n - \tilde{f}_n)| \sum |L_n(x)|$
+				\item Bei Polynomen mit hohem Grad und äquidistanten Stützstellen wächst $\Lambda_N$ sehr stark an	 
+			\end{itemize}
+		\item Geben Sie die Newton-Darstellung des Interpolationspolynoms an und vergleichen Sie diese mit der Lagrange-Darstellung.
+			\begin{itemize}
+				\item Bei der Newton-Darstellung wird versucht, das Interpolationspolynom schrittweise aus Polynomen mit niedrigerem Grad aufzubauen
+				\item Newton-Darstellung: $p_{0,N}(x) = a_0 + a_1(x - x_0) + a_2(x - x_0)(x - x_1) + \dots + a_N(x-x_0) \cdot \dots \cdot (x-x_{N-1})$
+				\item Lagrange-Darstellung: $p(x) = \sum_{n=0}^{N} f_n L_n(x)$ mit $L_n(x) = \prod_{m=0, m \neq n}^{N} \frac{x-x_m}{x_n - x_m}$
+			\end{itemize}
+		\item Formulieren Sie das Lemma von Aitken und erklären Sie, wie daraus die Formel für die dividierten Differenzen hergeleitet werden kann.
+			\begin{itemize}
+				\item Das Lemma besagt, dass die Interpolationspolynome rekursiv aufgabeut werden können
+				\item Die Leitkoeffizieniten der Rekursion des Lemmas sind $f_{n,k} = \frac{f_{n,k-1} - f_{n+1,k}}{x_n - x_k}$, welche auch die $a_i$ beim Polynom in Newton-Darstellung sind (s.o.)
+			\end{itemize}
+		\item 		
 	\end{enumerate}	
 \end{document}
