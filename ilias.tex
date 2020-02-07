@@ -15,7 +15,7 @@
 \end{abstract}
 
 \section{Vorlesung 1}
-\subsection{Lernkotrolle}
+\subsection{Lernkontrolle}
 \begin{enumerate}
 	\item Erklären sie den Aufbau einer normalisierten Gleitkommazahl
 		\begin{itemize}
@@ -157,7 +157,7 @@
 	\end{enumerate}
 
 \section{Vorlesung 5}
-\subsection{Lernübung}
+\subsection{Lernkontrolle}
 	Betrachtet wird das lineare Ausgleichsproblem $||Ax-b|| = min!$ zu $A \in \mathbb{R}^{M \times N}, b \in \mathbb{R}^M$
 	\begin{enumerate}
 		\item Erklären Sie, in welcher Situation man ein solches lineares Ausgleichsproblem betrachtet.
@@ -186,4 +186,36 @@
 				\item bei $M>N$ ist $x = \sum_{r=1}^{R} \frac{(u^r)^Tb}{\sigma_r}v^r$ eine Lösung der Normalengleichung mit min. euklidischer Norm (siehe Übungen und ÜBs)
 			\end{itemize}
 	\end{enumerate}
+
+\section{Vorlesung 6}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Formulieren Sie das Newton-Verfahren zur Berechnung von $\sqrt{a}$ für $a  \in (1,4)$, indem Sie die Funktion $f$ und die Newton-Iteration explizit angeben, und erklären Sie, wie die Berechnung der Wurzel einer normierten Binärzahl $(1+m)2^e$ darauf zurückgeführt werden kann
+			\begin{itemize}
+				\item $f(x) = x^2 - a \Rightarrow x = \sqrt{a}$
+				\item $2x_kd_k = -x^2 + a \Leftrightarrow 2 d_k = \frac{{x_k}^2}{x_k}+\frac{a}{x_k} \Leftrightarrow d_k = \frac{1}{2}({x_k} + \frac{a}{x_k})$
+			\end{itemize}
+		\item Geben Sie die allgemeine Newton-Iteration zur Nullstellengleichung $f(x)=0$ einer Funktion $f: \mathbb{R}^N \rightarrow \mathbb{R}^N$ an.
+			\begin{itemize}
+				\item $f'(x_k)d_k = -f(x_k)$
+				\item $x_{k+1} = x_k + d_k$
+			\end{itemize}
+		\item Nennen Sie zwei wichtige Aspekte im Hinblick auf die Konvergenz des Newton-Verfahrens.
+			\begin{itemize}
+				\item Das Newton-Verfahren konvergiert lokal quadratisch
+				\item Das Newton-Verfahren konvergiert nur bei guter Wahl von $x_0$, sonst kann es divergieren
+			\end{itemize}	
+		\item Erklären Sie die geometrische Deutung des Newton-Verfahrens im Fall $N=1$
+			\begin{itemize}
+				\item Das Newton-Verfahren legt im ersten Schritt eine Tangente an $f$ mit Nullstelle $x_0$ an
+				\item In den darauffolgenden Schritten wird die Nullstelle der neuen Tangente der Berührungspunkt der alten Tangente mit $f$ 
+			\end{itemize}
+		\item Erklären Sie, was mit dem Vereinfachten Newton-Verfahren gemeint ist und was die Vereinfachung für Konsequenzen hat.
+			\begin{itemize}
+				\item Das berechnen von $f'(x_k)$ in $d_k f'(x_k) = -f(x_k)$ ist sehr kompliziert, da im mehrdim. Fall eine Jacobimatrix berechnetw erden muss
+				\item Beim vereinfachten Newton-Verfahren wird anstelle von $f'(x_k)$ immer die Matrix $A \approx f'(x_0)$ genommen, also $d_k A = -f(x_k)$
+				\item Die Konvergenz des Verfahrens wird dann linear anstelle von quadratisch
+				\item Für die Matrix $A$ kann im ersten Schritt eine LR-Zerlegung errechnet werden, welche dann immer weiter genutzt werden kann
+			\end{itemize}	
+	\end{enumerate}	
 \end{document}
