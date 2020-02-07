@@ -1,6 +1,10 @@
 \documentclass[]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb}
+\usepackage{amsmath}
+
+\newcommand*{\poly}{\ensuremath{\mathbb{P}}}
+\newcommand*{\real}{\ensuremath{\mathbb{R}}}
 
 %opening
 \title{ILIAS-Lernkontrollen und -Übungen}
@@ -230,7 +234,7 @@
 		\item Begründen Sie, warum das Problem der Polynominterpolation eine eindeutige Lösung besitzt
 			\begin{itemize}
 				\item Ein Polynom $p$ mit $deg(p) \leq N$ ist durch $N+1$ Stützstellen exakt definiert
-				\item Bsp.: Eine Gerade aus $\mathbb{P}^1$ ist durch 2 Punkte exakt definiert
+				\item Bsp.: Eine Gerade aus $\mathbb{P}_1$ ist durch 2 Punkte exakt definiert
 			\end{itemize}	
 		\item Vollziehen Sie nach, welche Größe als Maß für die Kondition des Problems gilt und warum Interpolationspolynome von hohem Grad zumindest bei äquidistanten Stützstellen mit Vorsicht zu genießen sind.
 			\begin{itemize}
@@ -249,9 +253,82 @@
 			\end{itemize}
 		\item Formulieren Sie das Lemma von Aitken und erklären Sie, wie daraus die Formel für die dividierten Differenzen hergeleitet werden kann.
 			\begin{itemize}
-				\item Das Lemma besagt, dass die Interpolationspolynome rekursiv aufgabeut werden können
-				\item Die Leitkoeffizieniten der Rekursion des Lemmas sind $f_{n,k} = \frac{f_{n,k-1} - f_{n+1,k}}{x_n - x_k}$, welche auch die $a_i$ beim Polynom in Newton-Darstellung sind (s.o.)
+				\item Das Lemma besagt, dass die Interpolationspolynome rekursiv aufgebaut werden können
+				\item Die Leitkoeffizieniten der Rekursion des Lemmas sind $f_{n,k} = \frac{f_{n,k-1} - f_{n+1,k}}{x_n - x_k}$
 			\end{itemize}
-		\item 		
+	\end{enumerate}
+
+\section{Vorlesung 8}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Wiederholen Sie das Restglied der Polynominterpolation, um den Interpolationsfehler $f(x)-p(x)$ für eine hinreichend glatte Funktion $f: [a,b]\rightarrow \mathbb{R}$ anzugeben. 
+			\begin{itemize}
+				\item $f(x) - p(x) = (x-x_0) \cdot \dots \cdot (x-x_{N}) \frac{f^{N+1}(\tilde{x})}{(N+1)!}$ wobei $\tilde{x}$ eine Zwischenstelle zu $x$ ist
+			\end{itemize}
+		\item Formulieren Sie die beiden Definitionen der Tschebyscheff-Polynome und geben Sie vier Eigenschaften dieser Polynome an
+			\begin{itemize}
+				\item Rekursiv: $T_0(x) = 1, T_1(x) = x, T_{n+1}(x) = 2x \cdot T_n(x) - T_{n-1}(x)$
+				\item Alternativ: $T_n(x) = cos(n \cdot arccos(x))$
+				\item 4 Eigenschaften:
+				\begin{itemize}
+					\item Stehen alle im Skript auf S.58 wer lust die abzutippen kann gerne ein PR aufmachen %TODO
+				\end{itemize}
+			\end{itemize}
+		\item Nennen Sie zwei Gründe, warum Tschebyscheff-Stützstellen eine gute Wahl an Stützstellen sind, und geben Sie die Tschebyscheff-Stützstellen an
+			\begin{itemize}
+				\item Unter allen Stützstellen wird $(x-x_0) \cdot \dots \cdot (x-x_{N})$ minimal wenn die $x_n$ genau die Nullstellen des $(N+1)$-ten Tschebyscheff-Polynomes sind
+				\item Die Lebesque-Konstante $\Lambda_N$ ist bei Tschebyscheff-Stützstellen geringer als bei äquidistanten Stützstellen
+				\item Die Nullstellen und damit die $x_n$ sind leicht berechenbar: $x_n = cos(\frac{2n+1}{2N+2} \pi)$
+			\end{itemize}
+		\item Erklären Sie, wie und warum sich die Koeffizienten der Tschebyscheff-Darstellung des Interpolationspolynoms berechnen lassen
+			\begin{itemize}
+				\item Die Tschbyscheff-Polynome $T_{0\dots N}$ bilden eine Basis von $\poly_N$, da sie orthogonal bzgl. des Skalarprodutes sind
+				\item $p(x) = \frac{1}{2}c_o + c_1T_1(x) + \dots + c_NT_N(x)$ mit \\
+					$c_n = \frac{2}{N+1} \sum_{m=0}^{N} f_m cos(n \cdot \frac{2n+1}{2N+2} \pi)$
+			\end{itemize}
+		\item Geben Sie die Berechnungsvorschrift des (stabilen) Clenshaw-Algorithmus an, mit dem das Interpolationspolynom $p(x) = \frac{1}{2}c_o + c_1T_1(x) + \dots + c_NT_N(x)$ an der Stelle $x$ ausgewertet werden kann.
+			\begin{itemize}
+				\item Mit $d_{N+2} = d_{N+1} = 0, d_n = c_n + 2x \cdot d_{n+1} - d_{n+2}$ gilt: \\
+				$p(x) = \frac{1}{2}(d_0 - d_2)$
+			\end{itemize}		
+	\end{enumerate}
+
+\section{Vorlesung 9}
+\subsection{Lernkontrolle}
+	Ein kubischer Spline ist eine $C^2$-Funktion $s: [a,b] \rightarrow \real$, welche die Stützpunkite $(x_0, f(x_0)), \cdots (x_N, f(x_N))$ interpoliert, wobei jedes $s_n \in \poly_3$ liegt.
+	\begin{enumerate}
+		\item Formulieren Sie die Definition dreier unterschiedlicher Klassen von interpolierenden kubischen Splines und geben Sie eine Minimalitätseigenschaft dieser Splines an, welche insbesondere Oszillationen [...] verhindert.
+			\begin{itemize}
+				\item Drei Klassen:
+					\begin{itemize}
+						\item Eingespannt: $s'(a) = v_0, s'(b)=v_n$ für vorgeg. $v_0, v_n$
+						\item Natürlich: $s''(a)=s''(b)=0$
+						\item Periodisch: $s'(a)=s'(b)$ und $s''(a)=s''(b)$
+					\end{itemize}
+				\item Minimalitätseigenschaft: $\int_a^b |s''(x)|^2 dx$ minimal
+			\end{itemize}
+		\item Geben Sie den Ansatz für $s_n$ an und erklären Sie diesen
+			\begin{itemize}
+				\item $s_n \in \poly_3$ besteht aus interpolierendem und glättendem Anteil
+				\item $s_n(x) = y_{n-1} + (x - x_{n-1}) y_{n-1, n}$ $ + $  \\
+								$(x - x_{n-1})( x - x_n) ( \alpha_n (x - x_{n-1}) + \beta_n (x - x_n) ) $
+				\item Ausserdem: $s_n(x_{n-1}) = f(x_{n-1})$ und $s_n(x_n) = f(x_n)$				
+			\end{itemize}	
+		\item Vollziehen Sie nach, warum durch die Def. $\gamma_{n-1} = s_n ''(x_{n-1})$ und $ \gamma_n = s_n ''(x_n)$ bereits $N-1$ Glattheitsbedingungen automatisch erfüllt sind und geben Sie die übrigen $N-1$ Glattheitsbedingungen an
+			\begin{itemize}
+				\item Die Def. sind $2N$ Gleichungen für $N+1$ Unbekannte ($\gamma_0, \dots \gamma_N$). Dadurch sind $N-1$ Glattheitsbed. an die zweite Ableitung direkt erfüllt
+				\item Die Bedigungen an die erste Ableitung $s_n'(x_n) = s_{n+1}(x_n)$ für $n=1, \dots , N-1$ sind die anderen $N-1$ Bedingungen
+			\end{itemize}
+		\item Geben Sie das LGS zur Bestimmung von $(\gamma_0, \dots , \gamma_N)^T$ im Fall äquidistanter Stützstellen $(h_n = h)$ für eingespannte Splines an
+			\begin{itemize}
+				\item Skript S. 70 unten, wer das abtippen will kann gerne ein PR aufmachen %TODO
+			\end{itemize}
+		\item Sei $s(x)$ der eingespannte kubische Spline zu den Stützstellen oben und $\tilde{s}(x)$ entsprechend zu den gestörten Werten $\tilde{f}(x)$ für $n = 0, \dots , N$ Erklären Sie, wie die "Lagrange"-Splines $l_n(x)$ definiert sind und wie und warum sich damit die Differenz $s(x) - \tilde{s}(x)$ darstellen lässt
+			\begin{itemize}
+				\item Lagrange-Splines: $l_n(x_m) = \begin{cases} 1 & n = m \\0 & \text{sonst} \end{cases}$
+				\item $|s(x) - \tilde{s}(x)| \leq \sum |y_n - \tilde{y}_n| |l_n(x)| \leq \sum |l_n(x)| \cdot ( max_{n=0\dots N} |y_n - \tilde{y}_n| ) \leq \Lambda_N \cdot ( max_{n=0\dots N} |y_n - \tilde{y}_n| )$ wobei $y_i = f(x_i)$
+			\end{itemize}
 	\end{enumerate}	
+
+	
 \end{document}
