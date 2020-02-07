@@ -1,0 +1,189 @@
+\documentclass[]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+
+%opening
+\title{ILIAS-Lernkontrollen und -Übungen}
+\author{Maximilian Göckel}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section{Vorlesung 1}
+\subsection{Lernkotrolle}
+\begin{enumerate}
+	\item Erklären sie den Aufbau einer normalisierten Gleitkommazahl
+		\begin{itemize}
+			\item Gleitkommazahl: $\textit{Basis} * \textit{Mantisse}^{\textit{Exponent}}$
+			\item Basis: Meistens Zweierpotenz (2,8,16)
+			\item Exponent: $e_{min} \leq e = e_{min} + \sum_{l=0}^{L_e - 1}c_l B^l \leq e_{min} + B^{L_e} - 1 := e_{max}$
+			\item Mantisse: \begin{itemize}
+				\item Entweder 0 oder $m = \sum_{l=1}^{L_m}a_l B1{-l}$
+				\item $B^{-1} \leq |m| < 1$
+			\end{itemize}
+			\item Normalisierung: Mantisse beginnt immer mit einer 1, also $a_1 \neq 0$
+		\end{itemize}
+	\item Geben Sie die Definition der Maschinengenauigkeit an und erklären Sie, in welcher Weise die Mantissenlänge $L_m$ die relative Genauigkeit der Darstellung reeller Zahlen durch eine normalisierte Gleitpunktzahl bestimmt
+		\begin{itemize}
+			\item Maschinengenauigkeit $eps = \frac{B^{(1 - L_m)}}{2}$.
+			\item Ist die Mantisse länger (also $L_m$ größer), so können mehr Nachkommastellen dargestellt werden, da $eps$ kleiner wird.
+		\end{itemize}
+	\item Beschreiben Sie den IEEE-Standard des Double Precision-Formats und erklären Sie, warum $1+eps$ die kleinste Zahl echt größer $1$ in $FL$ ist
+		\begin{itemize}
+			\item 64Bit für Gleitpunktdarstellung
+				\begin{itemize}
+					\item Basis $2$ fest
+					\item 1Bit Vorzeichen
+					\item 11Bit Exponent mit $e_{min} = -1022$
+					\item 52Bit Mantisse
+				\end{itemize}
+			\item Darstellbare (pos.) Zahlen von $10^{-308}$ bis $10^{308}$
+			\item Rel. Genauigkeit $eps = 2^{-52}$, circa 16 Nachkommastellen genau
+			\item Jede Zahl $x$ mit $1 < x < 1+eps$ ist zu klein, es werden Nachkommastellen abgeschnitten
+			\item Bei normalisierten GKZ ist die 1 fest, es können also mehr Bits für die Nachkommastellen der Mantisse genutzt werden und die Genauigkeit steigt auf $\frac{eps}{2}$
+		\end{itemize}
+	\item Nennen Sie mögliche Fehlerquellen der Eingabedaten eines numerischen Verfahrens und innerhalb des Verfahrens selbst beim Lösen eines mathematischen Problems und formulieren Sie die Fragestellungen, welche der Stabilität eines Verfahrens und der Kondition des Problems zugrunde liegen
+		\begin{itemize}
+			\item Eingabedaten-Fehler: Rundungsfehler, Messwertfehler
+			\item Kondition: "Wie wirken sich Störungen der Eingabedaten auf das Resultat aus, unabhängig vom Algorithmus?"
+			\item Verfahrens-Fehler: Rundungsfehler, Approximationsfehler (wenn das Verfahren von vornherein nicht genau arbeitet)
+			\item Stabilität: "Wie stark wirken sich Störungen im Algorithmus auf das Ergebnis aus?"
+		\end{itemize}
+	\item Vollziehen Sie die Untersuchung und Deutung der \textit{Kondition der Summe zweier Zahlen} der Vorlesung nach, indem Sie auch das Phänomen der \textit{Auslöschung} erklären \\
+	\\
+		Kondition von $x+y$: Betrachte $x+\epsilon_x$ und $y+\epsilon_y$ als gestörte Eingabedaten von $x$ und $y$. \\
+		Die absolute Abweichung von $(x+\epsilon_x) + (y+\epsilon_y)$ zu $x+y$ ist $Abw_{abs} = |((x+\epsilon_x) + (y+\epsilon_y)) - (x+y)|$. Die relative Abweichung ist $Abw_{rel} = \frac{Abw_{abs}}{|(x+y)|} \leq \epsilon \frac{|x|+|y|}{|x+y|}$ fpr ein kleines $\epsilon$. Das Problem ist an sich gut konditioniert, nur für $x \approx (-y)$ kann es zur Auslöschung kommen.\\
+	\\
+		Auslöschung: Bei der Subtraktion von zwei fast gleich großen GKZ (erste paar Nachkommastellen gleich) kann es
+		passieren dass der Unterschied so klein ist, dass er durch die Maschinengenauigkeit beeinflusst wird. Die gleichen Stellen werden ausgelöscht und nur Stellen mit Rundungsfehler bleiben bestehen.\\
+	Beispiel: $a = 2,345678$ und $b = 2,346789$, so ist $(b-a) = 0,001111$. Die niedrigwertigsten Stellen sind sehr anfällig für Rundungsfehler (z.B. aus vorherigen Berechnungen) und die höchsten (korrekten) Stellen löschen sich zu $0$ aus.
+\end{enumerate}
+
+\section{Vorlesung 2}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Erklären Sie, wann genau und warum eine Zerlegung $A=LR$ für $A$ existiert und mit welchem Aufwand sich diese berechnen lässt.
+			\begin{itemize}
+				\item $A = LR$ existiert $\Leftrightarrow$ Jede Matrix $A_{[1:n,1:n]}$ ($n = 1...N$) ist regulär
+				\item Eine LR-Zerlegung kann in O($\frac{1}{3} N^3$) errechnet werden
+			\end{itemize}
+		\item Geben Sie an, für welche spezielle Klasse von Matrizen $A$ auf jeden Fall eine Zerlegung $A=LR$ existiert.
+			\begin{itemize}
+				\item Für Matrizen die bereits die Form von $L$ oder $R$ haben (obere o. untere Dreiecksmatrizen)
+			\end{itemize}
+		\item Erklären Sie, wann genau und warum eine Zerlegung $PA=LR$ für $A$ existiert.
+			\begin{itemize}
+				\item $A$ regulär $\Rightarrow$ Es existiert eine Permutationsmatrix $P$ sodass für $PA$ die Bedingungen aus 1. gelten
+				\item $P$ kann während der Berechnung von $L, R$ durch Spaltenpivotwahl berechnet werden
+			\end{itemize}
+		\item Beschreiben Sie, wie sich das lineare Gleichungssystem $Ax=b$ bei Kenntnis einer Zerlegung $PA=LR$ lösen lässt, und geben Sie den Aufwand der einzelnen Schritte an.
+			\begin{enumerate}
+				\item[1.] Löse $Ly = Pb$ durch Vorwärtssubstitution in O($\frac{1}{2} N^2$)
+				\item[2.] Löse $Rx = y$ durch Rückwärtssubstitution in O($\frac{1}{2} N^2$)
+				\item[  ] Dies benötigt $2 \times$O($\frac{1}{2} N^2$) $=$ O($N^2$) Operationen
+			\end{enumerate}
+		\item Erklären Sie, warum die Kenntnis der Inversen $A^{-1}$ gegenüber einer bekannten Zerlegung $PA = LR$ beim Lösen von $Ax = b$ keinen Vorteil darstellt.
+			\begin{itemize}
+				\item Da bei Kenntnis von $A^{-1}$ immer noch $A^{-1} b$ errechnet werden muss. Dies benötigt auch O($N^2$) Schritte
+			\end{itemize}
+	\end{enumerate}
+
+\section{Vorlesung 3}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Erklären Sie, für welche Matrizen $A$ genau eine Cholesky-Zerlegung existiert und wie bei Kenntnis einer solchen Zerlegung das Gleichungssystem $Ax=b$ gelöst werden kann.
+			\begin{itemize}
+				\item $A$ spd-Matrix $\Leftrightarrow$ Cholesky-Zerlegung $A=LL^T$ existiert
+				\item Löse $Ax=b$ wie mit der LR-Zerlegung über Vorwärts- und Rückwärtssubstitition (anstelle von $R$ nehme $L^T$)
+			\end{itemize}
+		\item Geben Sie an, wie eine $QR$-Zerlegung einer Matrix $A \in \mathbb{R}^{M \times N}$ definiert ist, indem Sie die Faktoren beschreiben, und erklären Sie, wie sich ein lösbares LGS $Ax=b$ durch eine solche Zerlegung lösen lässt.
+			\begin{itemize}
+				\item $A=QR$ mit $Q \in \mathbb{R}^{M \times M}$ orthogonal (also $QQ^T = I_M$) und \\
+				$R = \left (\begin{array}{r} \tilde{R} \\ 0 \end{array} \right)$ mit $\tilde{R} \in \mathbb{R}^{N \times N}$
+				\item Eine $QR$-Zerlegung kann mit Householder-Transformationen errechnet werden
+				\item Löse erst $Qc=b$ ($Q^{-1} = Q^T$, also $c = Q^Tb$)
+				\item $Rx=c$ durch Rückwärtssubstitution
+			\end{itemize}
+		\item Nennen Sie einen Vorteil und einen Nachteil der $QR$-Zerlegung gegenüber der $LR$- und Cholesky-Zerlegung.
+			\begin{itemize}
+				\item Vorteil: Sehr stabiles Verfahren
+				\item Nachteil: Mit O($\frac{2}{3} N^3$) am langsamsten
+			\end{itemize}
+		\item Wiederholen Sie Eigenschaften und die Struktur von Householder-Transformationen.
+			\begin{itemize}
+				\item Orthogonale Matrix $Q = I_M - 2w w^T$ mit $w \in \mathbb{R}^M, w^T w = 1$ sodass $Qv = \sigma e^1 = (\sigma$ $0 \dots 0)^T$ für ein $v \in \mathbb{R}^M, v \neq 0$
+			\end{itemize}
+		\item Erklären Sie, wie eine Householder-Transformation $Q$ effizient gespeichert werden kann und wie ein Produkt $Qy$ berechnet wird
+			\begin{itemize}
+				\item Die Householdervektoren $w_i$ können in $A$ gespeichert werden, für die $r_{nn}$ wird ein $N$-dim. Vektor benötigt
+			\end{itemize}
+	\end{enumerate}
+
+\section{Vorlesung 4}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Geben Sie zu einer Norm $|| * ||$ auf $\mathbb{R}^N$ die zugehörige Matrixnorm an und nennen Sie drei wichtige Beispiele solcher Normen.
+			\begin{itemize}
+				\item Allgemeine Matrixnorm $||A|| := sup_{x \neq 0} \frac{||Ax||}{||x||}$ für $A \in \mathbb{R}^{N \times N}$
+				\item Zeilensummennorm $||A||_\infty$: $max_{m=1 \dots N} \sum_{n=1}^{N}|a_{nm}|$
+				\item Spaltensummennorm $||A||_1$: $max_{m=1 \dots N} \sum_{n=1}^{N}|a_{mn}|$
+				\item Spektralnorm $||A||_2$: $\sqrt{\textit{größter EW von }A^T A}$
+			\end{itemize}
+		\item Formulieren Sie die Frage, der sich die Kondition eines Problems widmet.
+			\begin{itemize}
+				\item "Wie wirken sich Störungen der Eingabegröße auf die Lösung aus, unabh. vom Algorithmus?"
+			\end{itemize}
+		\item Erklären Sie, was genau eine kleine Kondition bzw. eine große Kondition $cond(A)$ über das Problem $Ax=b$ aussagt.
+			\begin{itemize}
+				\item Die Kondition von $A$ ist die Sensitivität des rel. Fehlers von $A$ ggü. Störungen von $b$
+				\item Eine kleine $cond(A)$ bedeutet geringe Sensitivität
+			\end{itemize}
+		\item Nennen Sie mindestens drei Eigenschaften der Funktion $cond(A)$
+			\begin{itemize}
+				\item $cond(A) = ||A||$ $||A^{-1}||$
+				\item $cond(A) = cond(\lambda A),$ \quad $\lambda \in \mathbb{R} \backslash \{0\}$
+				\item $cond(A) = \frac{max_{||y||=1}  ||Ay||}{min_{||x||=1} ||Ax||}$
+			\end{itemize}
+		\item Erklären Sie, warum die Kondition orthogonaler Matrizen bezüglich $||A||_2$ gleich 1 ist und wie sich die Kondition von symmetrischen und spd-Matrizen bezüglich dieser Norm berechnen lässt.  
+			\begin{itemize}
+				\item Da orthogonale Matrizen orthonormal bzgl. des Skalarprodutes sind
+				\item $cond(A) = \frac{\textit{betragl. größter EW}}{\textit{betragl. kleinster EW}}$, wenn $A$ symm./spd.
+			\end{itemize}
+	\end{enumerate}
+
+\section{Vorlesung 5}
+\subsection{Lernübung}
+	Betrachtet wird das lineare Ausgleichsproblem $||Ax-b|| = min!$ zu $A \in \mathbb{R}^{M \times N}, b \in \mathbb{R}^M$
+	\begin{enumerate}
+		\item Erklären Sie, in welcher Situation man ein solches lineares Ausgleichsproblem betrachtet.
+			\begin{itemize}
+				\item Im Fall $M > N$ ist $Ax=b$ überbestimmt und mglw. nicht lösbar
+			\end{itemize}
+		\item Beschreiben Sie den Zusammenhang des linearen Ausgleichsproblems mit der zugehörigen Normalengleichung und geben Sie diese an.
+			\begin{itemize}
+				\item Die Lösung $x$ für die Normalengleichung $A^TAx = A^Tb$ löst auch das Ausgleichsproblem
+			\end{itemize}
+		\item Erklären Sie, warum das lineare Ausgleichsproblem immer lösbar ist und unter welcher Bedingung an $A$ eine eindeutige Lösung vorliegt
+			\begin{itemize}
+				\item Die Normalengleichung ist immer lösbar (siehe Skript) $\Rightarrow$ Das lin. Ausgleichsproblem ist immer lösbar
+				\item Ist $Rang(A)$ maximal, so ist $A^TA$ spd und das lin. Ausgleichsproblem ist eindeutig lösbar
+			\end{itemize}
+		\item Erklären Sie, wie und warum das lineare Ausgleichsproblem mit einer QR-Zerlegung von A gelöst werden kann.
+			\begin{itemize}
+				\item Sind $Q, R$ Matrizen aus der $QR$-Zerlegung mit $R = \left (\begin{array}{r} \tilde{R} \\ 0 \end{array} \right)$ mit $\tilde{R} \in \mathbb{R}^{N \times N}$, so ist $x = \tilde{R}^{-1} c$ mit $c$ aus $Q^Tb = \left (\begin{array}{r} c \\ d \end{array} \right)$ die Lösung des Ausgleichproblems
+				\item Beweis siehe Skript S. 39 (gut zum Nachrechnen)
+			\end{itemize}
+		\item Erklären Sie, was eine Singulärwertzerlegung von $A$ mit $Rang(A) = R$ ist und wie diese genutzt werden kann, um eine Lösung des linearen Ausgleichsproblems mit minimaler euklidischer Norm zu bestimmen
+			\begin{itemize}
+				\item Singulärwertzerlegung von $A = U \Sigma V^T$ mit \\
+				$U \in \mathbb{R}^{M \times M},V \in \mathbb{R}^{N \times N}$ orthogonal, \\
+				$\Sigma = \left (\begin{array}{cc} \Sigma_R & 0 \\ 0&0 \end{array} \right) \in \mathbb{R}^{M \times N},$ \\ $\Sigma_R = diag(\sigma_1 \dots \sigma_R) \in \mathbb{R}^{R \times R}$
+				\item bei $M>N$ ist $x = \sum_{r=1}^{R} \frac{(u^r)^Tb}{\sigma_r}v^r$ eine Lösung der Normalengleichung mit min. euklidischer Norm (siehe Übungen und ÜBs)
+			\end{itemize}
+	\end{enumerate}
+\end{document}
