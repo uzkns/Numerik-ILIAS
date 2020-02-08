@@ -5,18 +5,18 @@
 
 \newcommand*{\poly}{\ensuremath{\mathbb{P}}}
 \newcommand*{\real}{\ensuremath{\mathbb{R}}}
+\newcommand*{\landau}{\ensuremath{\mathcal{O}}}
 
 %opening
 \title{ILIAS-Lernkontrollen und -Übungen}
-\author{Maximilian Göckel}
+\date{Sommersemester 2019}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-	Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Mathematik f.d. Fachrichtung Informatik" im SoSe 2019
-
+Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Mathematik f.d. Fachrichtung Informatik" im SoSe 2019
 \end{abstract}
 
 \section{Vorlesung 1}
@@ -415,9 +415,114 @@
 			\begin{itemize}
 				\item Fehler auf $[a,b]$: \\
 						$( \int_a^b f(x) dx ) - ( (b-a)\sum b_k \cdot f(a+c_k(b-a)))$
-				\item Fehler wenn $[a,b]$ auf $N$ Teilintervalle mit jewiliger Länge $h_i$ aufgeteilt wurde: \\
+				\item Fehler wenn $[a,b]$ auf $N$ Teilintervalle mit jeweiliger Länge $h_i$ aufgeteilt wurde: \\
 						$( \int_a^b f(x) dx ) - ( \sum_{i=1}^N h_i \sum_{k=1}^s b_k \cdot f(x_{n-1} + c_k h_n )$ 
 			\end{itemize}
 	\end{enumerate}
 
+\section{Vorlesung 12}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Geben Sie die definierende Gleichung für Eigenwerte und Eigenvektoren an und erklären Sie, warum die Eigenwerte die Nullstellen des charakteristischen Polynoms sind, jedoch nicht über dieses berechnet werden sollten
+			\begin{itemize}
+				\item Eigenwert-Eigenvektor-Gleichung: $Av = \lambda v, A \in \real^{N \times N}, v \in \real^N, \lambda \in \real$
+				\item Berechnung über Nullstellen des char. Polynoms möglich, da $Av = \lambda v  \Leftrightarrow (A- \lambda I_N)v = 0$
+				\item Nullstellengleichung bei Polynomen sehr schlecht konditioniert
+			\end{itemize}
+		\item Geben Sie die Konditionszahl eines einfachen Eigenwerts der Matrix $A \in \real^{N \times N}$ an und definieren Sie dabei auftretende Größen. Warum ist der minimale Wert der Konditionszahl größer gleich $1$?
+			\begin{itemize}
+				\item Gestörte Matrix $\tilde{A}$ mit $\tilde{a_{mn}} = a_{mn}(1 + \epsilon_{mn})$ wobei $|\epsilon| \leq eps$
+				\item Anders: $\tilde{A} = A + eps\cdot C$ mit $|c_{mn}| \leq |a_{mn}|$. Es sei $A(\epsilon) = A + \epsilon \cdot C$
+				%\item $\lambda(\epsilon) = \lambda + \epsilon \frac{u^T C v}{u^T v} + \mathcal{O}(\epsilon^2)$
+				\item $\frac{1}{|u^Tv|}$ mit $Av = \lambda v, u^TA = \lambda u^T, ||v||_2 = ||u||_2 = 1$ ist Konditionszahl zu $\lambda$
+			\end{itemize}
+		\item Formulieren Sie die Hauptidee der Vektoriteration, indem Sie insbesondere die nötigen Voraussetzungen an die Matrix $A$ angeben und erklären, wie sich damit ein Eigenwert von $A$ berechnen lässt.
+			\begin{itemize}
+				\item Vektoriteration findet betragsmäßig größten einfachen Eigenwert (hier immer $\lambda_1$)
+				\item Matrix $A$ muss also folgende EWs haben: $|\lambda_1| > |\lambda_2| \geq \dots \geq |\lambda_N|$
+				\item Wähle $x^0 = \mu_1v^1 + \dots + \mu_nv^N$ und berechne $Ax^0 = \mu_1\lambda_1v^1 + \dots + \mu_n\lambda_Nv^N = \lambda_1 ( \mu_1v^1 + \frac{\lambda_2}{\lambda_1}\mu_2v^2 + \dots)$
+				\item Alle Werte ausser $v^1$ werden um $\lambda_1$ gedämpft
+				\item Diese Multiplkation wird $k$-mal wiederholt: $A^kx^0 = \lambda_1^k ( \mu_1v^1 + (\frac{\lambda_2}{\lambda_1})^k \mu_2v^2 + \dots)$
+				\item Das ganze konvergiert gegen $\mu_1v^1$, wenn $\mu_1 \neq 0$ und muss nur noch nach jedem Schritt normiert werden
+			\end{itemize}
+		\item Formulieren Sie die Hauptidee der Inversen Vektoriteration, indem Sie insbesondere die nötigen Voraussetzungen an die Matrix $A$ angeben und erklären, wie sich damit ein Eigenwert von A berechnen lässt
+			\begin{itemize}
+				\item $A \in \real^{N \times N}$ symmetrisch mit einem betragmäßig kleinsten EW nahe $0$
+				\item $A$ ist durch die Voraussetzungen regulär, also ex. $A^{-1}$ mit EWs $\frac{1}{\lambda_i}$. Der kleinste EW von $A$ wird also zum größten EW von $A^{-1}$
+				\item Es wird iterativ berechnet: $y^k = \frac{x^k}{||x^k||_2}$ und $Ax^{k+1} = y^k$. Also 1 LGS pro Schritt
+			\end{itemize}
+		\item Formulieren Sie die Problemstelllung der Spektralen Bisektion.
+			\begin{itemize}
+				\item Sei $(V,E)$ ein ungerichteter, zusammenhängender Graph
+				\item Finde Zerteilung in 2 Mengen, sodass beide Mengen ungefähr gleich viele Knoten enthalten
+			\end{itemize}
+	\end{enumerate}
+
+\section{Vorlesung 13}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Formulieren Sie den QR-Algorithmus zur Berechnung der Eigenwerte einer Matrix $A \in \real^{N \times N}$, welche nur reelle Eigenwerte mit $|\lambda_1| > \dots > |\lambda_N|$ besitzt
+			\begin{enumerate}
+				\item Setze $A_0 = A$ und $k = 0$
+				\item Zerlege $A_k = Q_kR_k$ mittels QR-Zerlegung
+				\item Berechne $A_{k+1} = R_kQ_k$ und $k = k+1$ und zurück zu 2.
+			\end{enumerate}
+			\begin{itemize}
+				\item $A_k$ konvergiert gegen obere rechte Dreicksmatrix $R$ mit EWs auf der Hauptdiagonalen
+			\end{itemize}
+		\item Vollziehen Sie nach, wie $A$ durch $N-2$ Householder-Transformationen auf Hessenbergform gebracht werden kann
+			\begin{itemize}
+				\item $Q^TAQ = H$ mit $Q = Q_1 \cdots Q_{N-2}$, wobei $Q_i$ eine Householder-Transformation ist
+			\end{itemize}
+		\item Formulieren Sie den QR-Algorithmus mit Shift und erklären Sie, warum der Aufwand (unabhängig vom Shift) pro Iterationsschritt $\landau(N^2)$ Operationen beträgt
+			\begin{enumerate}
+				\item Setze $H_0 = H$ und $k = 0$
+				\item Zerlege $H_k - \mu_kI_N = Q_kR_k$ mittels QR-Zerlegung
+				\item Berechne $H_{k+1} = R_kQ_k + \mu_kI_N$ und $k = k+1$ und zurück zu 2.
+			\end{enumerate}
+			\begin{itemize}
+				\item Beim QR-Algorithmus mit Shift wird $A$ erst in Hessenbergform gebracht, was den Aufwand der QR-Zerlegung auf $\landau(N^2)$ reduziert
+			\end{itemize}
+		\item Erklären Sie, wie sich die Symmetrie in der Ausgangsmatrtix $A$ in der Struktur der $H_k$ widerspiegelt, und denken Sie kurz darüber nach, wie sich diese Struktur auf die Anzahl an Operationen auswirkt
+			\begin{itemize}
+				\item Ist $A$ symmetrisch, so ist $H$ eine Tridiagonalmatrix
+				\item Der Aufwand der Transformationen wird von $\frac{5}{3}N^3$ auf $\frac{2}{3}N^3$ reduziert
+			\end{itemize}
+		\item Erklären Sie grob, was quadratische bzw. im Fall einer symmetrischen Matrix kubische Konvergenz bei der Shiftwahl $\mu_k = h_{NN}^{(k)}$ bedeutet
+			\begin{itemize}
+				\item Kann noch nachgetragen werden %TODO
+			\end{itemize}
+	\end{enumerate}
+
+\section{Vorlesung 14}
+\subsection{Lernkontrolle}
+	\begin{enumerate}
+		\item Formulieren Sie typische Eigenschaften der Matrix $A \in \real^{N \times N}$ bzw. Anforderungen an die Lösung $x_*$, bei denen das LGS $Ax = b$ iterativ gelöst werden kann/sollte
+			\begin{itemize}
+				\item $N$ ist sehr groß oder $A$ ist sehr dünn besetzt
+				\item Es wird nur eine Approximation von $x_*$ benötigt
+			\end{itemize}
+		\item Formulieren Sie die Fixpunktiteration einer allgemeinen linearen Iteration und geben Sie $B$ für das Jacobi- und Gauß-Seidel-Verfahren an
+			\begin{itemize}
+				\item Ausgehend von Startwert $x^0 \in \real^N$: $x^{k+1} = x^k + B^{-1} \cdot (b-Ax^k)$
+				\item Jacobi: Sei $A = L + D + R$ aus Dreiecksmatrizen $L, R$ und Diagoalmatrix $D$, so ist $B=D$
+				\item Gauß-Seidel: $B = L+D$
+			\end{itemize}
+		\item Geben Sie eine hinreichende Bedingung für die Konvergenz einer allgemeinen linearen Iteration an und nennen Sie eine Eigenschaft der Matrix $A$, sodass Konvergenz des Jacobi- und des Gauß-Seidel-Verfahrens vorliegt
+			\begin{itemize}
+				\item Spektralradius von $I_N-B^{-1}A$ muss kleiner $1$ sein.
+				\item $A$ ist dann regulär und die Fixpunktiteration konvergiert gegen die eindeutige Lösung $x_*$
+				\item Ist $A$ strikt diagonaldominant, so konvergieren beide Verfahren für jedes Start-$x^0$
+			\end{itemize}
+		\item Geben Sie das Minimierungsproblem an, welches dem cg-Verfahren zugrunde liegt, und begründen Sie, warum dadurch das LGS $Ax=b$ gelöst wird
+			\begin{itemize}
+				\item Minimiert wird $\Phi(x) = \frac{1}{2}x^TAx - x^Tb$
+				\item $x_*$ ist Lösung der Minimierung, wenn $Ax = b$ gilt (Satz 37)
+			\end{itemize}
+		\item Erklären Sie grob, wie aus der Iterierten $x^k$ und der Suchrichtung $d^k$ die neue Iterierte $x^{k+1}$ und gegebenfalls die neue Suchrichtung $d^{k+1}$ berechnet wird
+			\begin{itemize}
+				\item $x^{k+1} = x^k + \alpha d^k, \alpha \in \real$
+				\item $d^{k+1} = r^{k+1} + \beta_k d^k, r^k = b-Ax^k, \beta_k = - \frac{\langle r^{k+1}, d^k \rangle_A}{\langle d^k, d^k \rangle_A}$
+			\end{itemize}
+	\end{enumerate}	
 \end{document}
