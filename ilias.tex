@@ -160,9 +160,10 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 				\item $cond(A) = cond(\lambda A),$ \quad $\lambda \in \mathbb{R} \backslash \{0\}$
 				\item $cond(A) = \frac{max_{||y||=1}  ||Ay||}{min_{||x||=1} ||Ax||}$
 			\end{itemize}
-		\item Erklären Sie, warum die Kondition orthogonaler Matrizen bezüglich $||A||_2$ gleich 1 ist und wie sich die Kondition von symmetrischen und spd-Matrizen bezüglich dieser Norm berechnen lässt.  
+		\item Erklären Sie, warum die Kondition orthogonaler Matrizen bezüglich $||.||_2$ gleich 1 ist und wie sich die Kondition von symmetrischen und spd-Matrizen bezüglich dieser Norm berechnen lässt.  
 			\begin{itemize}
 				\item Da orthogonale Matrizen orthonormal bzgl. des Skalarprodutes sind
+				\item Da für orthogonale Matrizen gilt: $A^TA = AA^T = I$, somit: \newline $cond_2(A) = \sqrt{\textit{groesster EW von } A^TA} = \sqrt{\textit{groesster EW von } I} = 1$
 				\item $cond(A) = \frac{\textit{betragl. größter EW}}{\textit{betragl. kleinster EW}}$, wenn $A$ symm./spd.
 			\end{itemize}
 	\end{enumerate}
