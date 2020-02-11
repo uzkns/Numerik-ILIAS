@@ -64,7 +64,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 	\item Vollziehen Sie die Untersuchung und Deutung der \textit{Kondition der Summe zweier Zahlen} der Vorlesung nach, indem Sie auch das Phänomen der \textit{Auslöschung} erklären \\
 	\\
 		Kondition von $x+y$: Betrachte $x+\epsilon_x$ und $y+\epsilon_y$ als gestörte Eingabedaten von $x$ und $y$. \\
-		Die absolute Abweichung von $(x+\epsilon_x) + (y+\epsilon_y)$ zu $x+y$ ist $Abw_{abs} = |((x+\epsilon_x) + (y+\epsilon_y)) - (x+y)|$. Die relative Abweichung ist $Abw_{rel} = \frac{Abw_{abs}}{|(x+y)|} \leq \epsilon \frac{|x|+|y|}{|x+y|}$ fpr ein kleines $\epsilon$. Das Problem ist an sich gut konditioniert, nur für $x \approx (-y)$ kann es zur Auslöschung kommen.\\
+		Die absolute Abweichung von $(x+\epsilon_x) + (y+\epsilon_y)$ zu $x+y$ ist $Abw_{abs} = |((x+\epsilon_x) + (y+\epsilon_y)) - (x+y)|$. Die relative Abweichung ist $Abw_{rel} = \frac{Abw_{abs}}{|(x+y)|} \leq \epsilon \frac{|x|+|y|}{|x+y|}$ für ein kleines $\epsilon$. Das Problem ist an sich gut konditioniert, nur für $x \approx (-y)$ kann es zur Auslöschung kommen.\\
 	\\
 		Auslöschung: Bei der Subtraktion von zwei fast gleich großen GKZ (erste paar Nachkommastellen gleich) kann es
 		passieren dass der Unterschied so klein ist, dass er durch die Maschinengenauigkeit beeinflusst wird. Die gleichen Stellen werden ausgelöscht und nur Stellen mit Rundungsfehler bleiben bestehen.\\
@@ -82,6 +82,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Geben Sie an, für welche spezielle Klasse von Matrizen $A$ auf jeden Fall eine Zerlegung $A=LR$ existiert.
 			\begin{itemize}
 				\item Für Matrizen die bereits die Form von $L$ oder $R$ haben (obere o. untere Dreiecksmatrizen)
+                \item Für Matrizen, die strikt diagonaldominant sind, also $|a_{kk}| > \sum_{n=1, n \neq k}^{N} |a_{kn}|$
 			\end{itemize}
 		\item Erklären Sie, wann genau und warum eine Zerlegung $PA=LR$ für $A$ existiert.
 			\begin{itemize}
@@ -133,6 +134,8 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Erklären Sie, wie eine Householder-Transformation $Q$ effizient gespeichert werden kann und wie ein Produkt $Qy$ berechnet wird
 			\begin{itemize}
 				\item Die Householdervektoren $w_i$ können in $A$ gespeichert werden, für die $r_{nn}$ wird ein $N$-dim. Vektor benötigt
+                \item Um $Qy$ zu berechnen, muss kein Matrix-Vektor-Produkt ausgewertet werden, denn:
+                $Qy = y - 2ww^Ty = y - 2\lambda w$ mit $\lambda = w^Ty \in \real$
 			\end{itemize}
 	\end{enumerate}
 
@@ -142,8 +145,8 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Geben Sie zu einer Norm $|| * ||$ auf $\mathbb{R}^N$ die zugehörige Matrixnorm an und nennen Sie drei wichtige Beispiele solcher Normen.
 			\begin{itemize}
 				\item Allgemeine Matrixnorm $||A|| := sup_{x \neq 0} \frac{||Ax||}{||x||}$ für $A \in \mathbb{R}^{N \times N}$
-				\item Zeilensummennorm $||A||_\infty$: $max_{m=1 \dots N} \sum_{n=1}^{N}|a_{nm}|$
-				\item Spaltensummennorm $||A||_1$: $max_{m=1 \dots N} \sum_{n=1}^{N}|a_{mn}|$
+				\item Zeilensummennorm $||A||_\infty$: $\max_{n=1 \dots N} \sum_{m=1}^{N}|a_{nm}|$
+				\item Spaltensummennorm $||A||_1$: $\max_{m=1 \dots N} \sum_{n=1}^{N}|a_{nm}|$
 				\item Spektralnorm $||A||_2$: $\sqrt{\textit{größter EW von }A^T A}$
 			\end{itemize}
 		\item Formulieren Sie die Frage, der sich die Kondition eines Problems widmet.
@@ -154,6 +157,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 			\begin{itemize}
 				\item Die Kondition von $A$ ist die Sensitivität des rel. Fehlers von $A$ ggü. Störungen von $b$
 				\item Eine kleine $cond(A)$ bedeutet geringe Sensitivität
+                \item Aber: Eine große $cond(A)$ bedeutet nicht immer, dass $A$ schlecht konditioniert ist (siehe Diagonalmatrizen)
 			\end{itemize}
 		\item Nennen Sie mindestens drei Eigenschaften der Funktion $cond(A)$
 			\begin{itemize}
@@ -165,7 +169,8 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 			\begin{itemize}
 				\item Da orthogonale Matrizen orthonormal bzgl. des Skalarprodutes sind
 				\item Da für orthogonale Matrizen gilt: $A^TA = AA^T = I$, somit: \newline $cond_2(A) = \sqrt{\textit{groesster EW von } A^TA} = \sqrt{\textit{groesster EW von } I} = 1$
-				\item $cond(A) = \frac{\textit{betragl. größter EW}}{\textit{betragl. kleinster EW}}$, wenn $A$ symm./spd.
+				\item $cond(A) = \frac{\textit{betragl. größter EW}}{\textit{betragl. kleinster EW}}$, wenn $A$ symmetrisch
+                \item $cond(A) = \frac{\textit{größter EW}}{\textit{kleinster EW}}$, wenn $A$ spd
 			\end{itemize}
 	\end{enumerate}
 \subsection{Übung}
@@ -189,7 +194,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 			\end{itemize}
 		\item Erklären Sie, warum das lineare Ausgleichsproblem immer lösbar ist und unter welcher Bedingung an $A$ eine eindeutige Lösung vorliegt
 			\begin{itemize}
-				\item Die Normalengleichung ist immer lösbar (siehe Skript) $\Rightarrow$ Das lin. Ausgleichsproblem ist immer lösbar
+				\item Die Normalengleichung ist immer lösbar, denn aus Bild$(A)^{\perp} = \text{Kern}(A^T)$ folgt $A^Tb \in \text{Bild}(A^TA)$. $\Rightarrow$ Das lin. Ausgleichsproblem ist immer lösbar
 				\item Ist $Rang(A)$ maximal, so ist $A^TA$ spd und das lin. Ausgleichsproblem ist eindeutig lösbar
 			\end{itemize}
 		\item Erklären Sie, wie und warum das lineare Ausgleichsproblem mit einer QR-Zerlegung von A gelöst werden kann.
@@ -271,6 +276,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Formulieren Sie das Lemma von Aitken und erklären Sie, wie daraus die Formel für die dividierten Differenzen hergeleitet werden kann.
 			\begin{itemize}
 				\item Das Lemma besagt, dass die Interpolationspolynome rekursiv aufgebaut werden können
+                \item Konkret gilt $p_{n,k}(x) = \frac{(x_n-x)p_{n + 1, k}(x) - (x_k - x) p_{n, k - 1}(x)}{x_n - x_k}$
 				\item Die Leitkoeffizieniten der Rekursion des Lemmas sind $f_{n,k} = \frac{f_{n,k-1} - f_{n+1,k}}{x_n - x_k}$
 			\end{itemize}
 	\end{enumerate}
@@ -284,6 +290,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Wiederholen Sie das Restglied der Polynominterpolation, um den Interpolationsfehler $f(x)-p(x)$ für eine hinreichend glatte Funktion $f: [a,b]\rightarrow \mathbb{R}$ anzugeben. 
 			\begin{itemize}
 				\item $f(x) - p(x) = (x-x_0) \cdot \dots \cdot (x-x_{N}) \frac{f^{N+1}(\tilde{x})}{(N+1)!}$ wobei $\tilde{x}$ eine Zwischenstelle zu $x$ ist
+                \item $(x-x_0) \cdot \dots \cdot (x-x_{N})$ bezeichnet hier das $(N+1)$-te Newton-Polynom $w_{N + 1}(x)$
 			\end{itemize}
 		\item Formulieren Sie die beiden Definitionen der Tschebyscheff-Polynome und geben Sie vier Eigenschaften dieser Polynome an
 			\begin{itemize}
@@ -291,7 +298,10 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 				\item Alternativ: $T_n(x) = cos(n \cdot arccos(x))$
 				\item 4 Eigenschaften:
 				\begin{itemize}
-					\item Stehen alle im Skript auf S.58 wer lust die abzutippen kann gerne ein PR aufmachen %TODO
+					\item Die Nullstellen von $T_N$ sind $\cos\left(\frac{2n+1}{2N} \pi\right)$, $n = 0, \dots, N - 1$
+                    \item $T_N\left(\cos \frac{n \pi}{N}\right) = (-1)^n$ für $n = 0,\dots,N$
+                    \item $|T_N(x)| \leq 1$ für $|x| \leq 1$
+                    \item Der Koeffizient von $x^N$ ist $2^{N - 1}$ für $N \geq 1$
 				\end{itemize}
 			\end{itemize}
 		\item Nennen Sie zwei Gründe, warum Tschebyscheff-Stützstellen eine gute Wahl an Stützstellen sind, und geben Sie die Tschebyscheff-Stützstellen an
@@ -391,8 +401,8 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 					\end{itemize}
 				\item Mittelpunktformel
 					\begin{itemize}
-						\item $f$ wird durch ein Rechteck der Höhe $f(a + \frac{b+a}{2})$ approximiert
-						\item $b_1 = 1, c_1 = 0$
+						\item $f$ wird durch ein Rechteck der Höhe $f(\frac{b+a}{2})$ approximiert
+						\item $b_1 = 1, c_1 = \frac{1}{2}$
 						\item Ordnung $p = 2$
 					\end{itemize}
 				\item Trapezformel
@@ -463,14 +473,15 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 				\item Anders: $\tilde{A} = A + eps\cdot C$ mit $|c_{mn}| \leq |a_{mn}|$. Es sei $A(\epsilon) = A + \epsilon \cdot C$
 				%\item $\lambda(\epsilon) = \lambda + \epsilon \frac{u^T C v}{u^T v} + \mathcal{O}(\epsilon^2)$
 				\item $\frac{1}{|u^Tv|}$ mit $Av = \lambda v, u^TA = \lambda u^T, ||v||_2 = ||u||_2 = 1$ ist Konditionszahl zu $\lambda$
+                \item Mit der Chauchy-Schwarz-Ungleichung folgt $\frac{1}{|u^Tv|} \geq \frac{1}{||u||_2 ||v||_2} = 1$
 			\end{itemize}
 		\item Formulieren Sie die Hauptidee der Vektoriteration, indem Sie insbesondere die nötigen Voraussetzungen an die Matrix $A$ angeben und erklären, wie sich damit ein Eigenwert von $A$ berechnen lässt.
 			\begin{itemize}
 				\item Vektoriteration findet betragsmäßig größten einfachen Eigenwert (hier immer $\lambda_1$)
 				\item Matrix $A$ muss also folgende EWs haben: $|\lambda_1| > |\lambda_2| \geq \dots \geq |\lambda_N|$
 				\item Wähle $x^0 = \mu_1v^1 + \dots + \mu_nv^N$ und berechne $Ax^0 = \mu_1\lambda_1v^1 + \dots + \mu_n\lambda_Nv^N = \lambda_1 ( \mu_1v^1 + \frac{\lambda_2}{\lambda_1}\mu_2v^2 + \dots)$
-				\item Alle Werte ausser $v^1$ werden um $\lambda_1$ gedämpft
-				\item Diese Multiplkation wird $k$-mal wiederholt: $A^kx^0 = \lambda_1^k ( \mu_1v^1 + (\frac{\lambda_2}{\lambda_1})^k \mu_2v^2 + \dots)$
+				\item Alle Werte außer $v^1$ werden um $\lambda_1$ gedämpft
+				\item Diese Multiplikation wird $k$-mal wiederholt: $A^kx^0 = \lambda_1^k ( \mu_1v^1 + (\frac{\lambda_2}{\lambda_1})^k \mu_2v^2 + \dots)$
 				\item Das ganze konvergiert gegen $\mu_1v^1$, wenn $\mu_1 \neq 0$ und muss nur noch nach jedem Schritt normiert werden
 			\end{itemize}
 		\item Formulieren Sie die Hauptidee der Inversen Vektoriteration, indem Sie insbesondere die nötigen Voraussetzungen an die Matrix $A$ angeben und erklären, wie sich damit ein Eigenwert von A berechnen lässt
@@ -482,7 +493,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Formulieren Sie die Problemstelllung der Spektralen Bisektion.
 			\begin{itemize}
 				\item Sei $(V,E)$ ein ungerichteter, zusammenhängender Graph
-				\item Finde Zerteilung in 2 Mengen, sodass beide Mengen ungefähr gleich viele Knoten enthalten
+				\item Finde Zerteilung in 2 Mengen, sodass beide Mengen ungefähr gleich viele Knoten enthalten und der Schnitt $E \cap (V_1 \times V_2)$ möglichst klein ist
 			\end{itemize}
 	\end{enumerate}
 
