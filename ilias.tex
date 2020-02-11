@@ -271,6 +271,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Formulieren Sie das Lemma von Aitken und erklären Sie, wie daraus die Formel für die dividierten Differenzen hergeleitet werden kann.
 			\begin{itemize}
 				\item Das Lemma besagt, dass die Interpolationspolynome rekursiv aufgebaut werden können
+                \item Konkret gilt $p_{n,k}(x) = \frac{(x_n-x)p_{n + 1, k}(x) - (x_k - x) p_{n, k - 1}(x)}{x_n - x_k}$
 				\item Die Leitkoeffizieniten der Rekursion des Lemmas sind $f_{n,k} = \frac{f_{n,k-1} - f_{n+1,k}}{x_n - x_k}$
 			\end{itemize}
 	\end{enumerate}
