@@ -64,7 +64,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 	\item Vollziehen Sie die Untersuchung und Deutung der \textit{Kondition der Summe zweier Zahlen} der Vorlesung nach, indem Sie auch das Phänomen der \textit{Auslöschung} erklären \\
 	\\
 		Kondition von $x+y$: Betrachte $x+\epsilon_x$ und $y+\epsilon_y$ als gestörte Eingabedaten von $x$ und $y$. \\
-		Die absolute Abweichung von $(x+\epsilon_x) + (y+\epsilon_y)$ zu $x+y$ ist $Abw_{abs} = |((x+\epsilon_x) + (y+\epsilon_y)) - (x+y)|$. Die relative Abweichung ist $Abw_{rel} = \frac{Abw_{abs}}{|(x+y)|} \leq \epsilon \frac{|x|+|y|}{|x+y|}$ fpr ein kleines $\epsilon$. Das Problem ist an sich gut konditioniert, nur für $x \approx (-y)$ kann es zur Auslöschung kommen.\\
+		Die absolute Abweichung von $(x+\epsilon_x) + (y+\epsilon_y)$ zu $x+y$ ist $Abw_{abs} = |((x+\epsilon_x) + (y+\epsilon_y)) - (x+y)|$. Die relative Abweichung ist $Abw_{rel} = \frac{Abw_{abs}}{|(x+y)|} \leq \epsilon \frac{|x|+|y|}{|x+y|}$ für ein kleines $\epsilon$. Das Problem ist an sich gut konditioniert, nur für $x \approx (-y)$ kann es zur Auslöschung kommen.\\
 	\\
 		Auslöschung: Bei der Subtraktion von zwei fast gleich großen GKZ (erste paar Nachkommastellen gleich) kann es
 		passieren dass der Unterschied so klein ist, dass er durch die Maschinengenauigkeit beeinflusst wird. Die gleichen Stellen werden ausgelöscht und nur Stellen mit Rundungsfehler bleiben bestehen.\\
