@@ -3,6 +3,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{hyperref}
 
 \newcommand*{\poly}{\ensuremath{\mathbb{P}}}
 \newcommand*{\real}{\ensuremath{\mathbb{R}}}
@@ -13,7 +14,7 @@
 \date{Sommersemester 2019}
 
 \begin{document}
-
+\tableofcontents
 \maketitle
 
 \begin{abstract}
@@ -408,7 +409,11 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 	\begin{enumerate}
 		\item Vollziehen Sie den Ansatz zur Bestimmung von Quadraturformeln erhöhter Ordnung nach
 			\begin{itemize}
-				\item Muss noch dringend nachgetragen werden! %TODO
+				\item Ist $(b_k, c_k)_{k=1..s}$ eine QF mit Ordnung $p>=s$, so ist die Ordnung genau dann $p = s + m$, wenn gilt: $\int_0^1 M(x) g(x) dx = 0$ für alle Polynome vom Grad $<= m-1$, aber nicht mehr für eines vom Grad $m$.
+				\begin{itemize}
+					\item $M(x) = (x-c_1)(x-c_2)...(x-c_s)$
+					\item $g(x)$ ist Polynom mit $deg(g) <= m-1 (bzw. s-1)$
+				\end{itemize}
 			\end{itemize}
 		\item Begründen Sie damit, welche maximale Ordnung eine Quadraturformel besitzen kann
 			\begin{itemize}
