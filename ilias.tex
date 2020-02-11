@@ -133,6 +133,8 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Erklären Sie, wie eine Householder-Transformation $Q$ effizient gespeichert werden kann und wie ein Produkt $Qy$ berechnet wird
 			\begin{itemize}
 				\item Die Householdervektoren $w_i$ können in $A$ gespeichert werden, für die $r_{nn}$ wird ein $N$-dim. Vektor benötigt
+                \item Um $Qy$ zu berechnen, muss kein Matrix-Vektor-Produkt ausgewertet werden, denn:
+                $Qy = y - 2ww^Ty = y - 2\lambda w$ mit $\lambda = w^Ty \in \real$
 			\end{itemize}
 	\end{enumerate}
 
