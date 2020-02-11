@@ -284,6 +284,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Wiederholen Sie das Restglied der Polynominterpolation, um den Interpolationsfehler $f(x)-p(x)$ für eine hinreichend glatte Funktion $f: [a,b]\rightarrow \mathbb{R}$ anzugeben. 
 			\begin{itemize}
 				\item $f(x) - p(x) = (x-x_0) \cdot \dots \cdot (x-x_{N}) \frac{f^{N+1}(\tilde{x})}{(N+1)!}$ wobei $\tilde{x}$ eine Zwischenstelle zu $x$ ist
+                \item $(x-x_0) \cdot \dots \cdot (x-x_{N})$ bezeichnet hier das $(N+1)$-te Newton-Polynom $w_{N + 1}(x)$
 			\end{itemize}
 		\item Formulieren Sie die beiden Definitionen der Tschebyscheff-Polynome und geben Sie vier Eigenschaften dieser Polynome an
 			\begin{itemize}
@@ -291,7 +292,10 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 				\item Alternativ: $T_n(x) = cos(n \cdot arccos(x))$
 				\item 4 Eigenschaften:
 				\begin{itemize}
-					\item Stehen alle im Skript auf S.58 wer lust die abzutippen kann gerne ein PR aufmachen %TODO
+					\item Die Nullstellen von $T_N$ sind $\cos\left(\frac{2n+1}{2N} \pi\right)$, $n = 0, \dots, N - 1$
+                    \item $T_N\left(\cos \frac{n \pi}{N}\right) = (-1)^n$ für $n = 0,\dots,N$
+                    \item $|T_N(x)| \leq 1$ für $|x| \leq 1$
+                    \item Der Koeffizient von $x^N$ ist $2^{N - 1}$ für $N \geq 1$
 				\end{itemize}
 			\end{itemize}
 		\item Nennen Sie zwei Gründe, warum Tschebyscheff-Stützstellen eine gute Wahl an Stützstellen sind, und geben Sie die Tschebyscheff-Stützstellen an
