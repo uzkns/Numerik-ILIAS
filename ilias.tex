@@ -142,8 +142,8 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 		\item Geben Sie zu einer Norm $|| * ||$ auf $\mathbb{R}^N$ die zugehörige Matrixnorm an und nennen Sie drei wichtige Beispiele solcher Normen.
 			\begin{itemize}
 				\item Allgemeine Matrixnorm $||A|| := sup_{x \neq 0} \frac{||Ax||}{||x||}$ für $A \in \mathbb{R}^{N \times N}$
-				\item Zeilensummennorm $||A||_\infty$: $max_{m=1 \dots N} \sum_{n=1}^{N}|a_{nm}|$
-				\item Spaltensummennorm $||A||_1$: $max_{m=1 \dots N} \sum_{n=1}^{N}|a_{mn}|$
+				\item Zeilensummennorm $||A||_\infty$: $\max_{n=1 \dots N} \sum_{m=1}^{N}|a_{nm}|$
+				\item Spaltensummennorm $||A||_1$: $\max_{m=1 \dots N} \sum_{n=1}^{N}|a_{nm}|$
 				\item Spektralnorm $||A||_2$: $\sqrt{\textit{größter EW von }A^T A}$
 			\end{itemize}
 		\item Formulieren Sie die Frage, der sich die Kondition eines Problems widmet.
@@ -154,6 +154,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 			\begin{itemize}
 				\item Die Kondition von $A$ ist die Sensitivität des rel. Fehlers von $A$ ggü. Störungen von $b$
 				\item Eine kleine $cond(A)$ bedeutet geringe Sensitivität
+                \item Aber: Eine große $cond(A)$ bedeutet nicht immer, dass $A$ schlecht konditioniert ist (siehe Diagonalmatrizen)
 			\end{itemize}
 		\item Nennen Sie mindestens drei Eigenschaften der Funktion $cond(A)$
 			\begin{itemize}
@@ -165,7 +166,8 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 			\begin{itemize}
 				\item Da orthogonale Matrizen orthonormal bzgl. des Skalarprodutes sind
 				\item Da für orthogonale Matrizen gilt: $A^TA = AA^T = I$, somit: \newline $cond_2(A) = \sqrt{\textit{groesster EW von } A^TA} = \sqrt{\textit{groesster EW von } I} = 1$
-				\item $cond(A) = \frac{\textit{betragl. größter EW}}{\textit{betragl. kleinster EW}}$, wenn $A$ symm./spd.
+				\item $cond(A) = \frac{\textit{betragl. größter EW}}{\textit{betragl. kleinster EW}}$, wenn $A$ symmetrisch
+                \item $cond(A) = \frac{\textit{größter EW}}{\textit{kleinster EW}}$, wenn $A$ spd
 			\end{itemize}
 	\end{enumerate}
 \subsection{Übung}
