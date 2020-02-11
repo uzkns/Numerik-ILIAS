@@ -461,6 +461,7 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 				\item Anders: $\tilde{A} = A + eps\cdot C$ mit $|c_{mn}| \leq |a_{mn}|$. Es sei $A(\epsilon) = A + \epsilon \cdot C$
 				%\item $\lambda(\epsilon) = \lambda + \epsilon \frac{u^T C v}{u^T v} + \mathcal{O}(\epsilon^2)$
 				\item $\frac{1}{|u^Tv|}$ mit $Av = \lambda v, u^TA = \lambda u^T, ||v||_2 = ||u||_2 = 1$ ist Konditionszahl zu $\lambda$
+                \item Mit der Chauchy-Schwarz-Ungleichung folgt $\frac{1}{|u^Tv|} \geq \frac{1}{||u||_2 ||v||_2} = 1$
 			\end{itemize}
 		\item Formulieren Sie die Hauptidee der Vektoriteration, indem Sie insbesondere die nötigen Voraussetzungen an die Matrix $A$ angeben und erklären, wie sich damit ein Eigenwert von $A$ berechnen lässt.
 			\begin{itemize}
