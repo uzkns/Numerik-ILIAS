@@ -467,8 +467,8 @@ Lösungen zu den ILIAS-Lernkontrollen und -Übungen zur Vorlesung "Numerische Ma
 				\item Vektoriteration findet betragsmäßig größten einfachen Eigenwert (hier immer $\lambda_1$)
 				\item Matrix $A$ muss also folgende EWs haben: $|\lambda_1| > |\lambda_2| \geq \dots \geq |\lambda_N|$
 				\item Wähle $x^0 = \mu_1v^1 + \dots + \mu_nv^N$ und berechne $Ax^0 = \mu_1\lambda_1v^1 + \dots + \mu_n\lambda_Nv^N = \lambda_1 ( \mu_1v^1 + \frac{\lambda_2}{\lambda_1}\mu_2v^2 + \dots)$
-				\item Alle Werte ausser $v^1$ werden um $\lambda_1$ gedämpft
-				\item Diese Multiplkation wird $k$-mal wiederholt: $A^kx^0 = \lambda_1^k ( \mu_1v^1 + (\frac{\lambda_2}{\lambda_1})^k \mu_2v^2 + \dots)$
+				\item Alle Werte außer $v^1$ werden um $\lambda_1$ gedämpft
+				\item Diese Multiplikation wird $k$-mal wiederholt: $A^kx^0 = \lambda_1^k ( \mu_1v^1 + (\frac{\lambda_2}{\lambda_1})^k \mu_2v^2 + \dots)$
 				\item Das ganze konvergiert gegen $\mu_1v^1$, wenn $\mu_1 \neq 0$ und muss nur noch nach jedem Schritt normiert werden
 			\end{itemize}
 		\item Formulieren Sie die Hauptidee der Inversen Vektoriteration, indem Sie insbesondere die nötigen Voraussetzungen an die Matrix $A$ angeben und erklären, wie sich damit ein Eigenwert von A berechnen lässt
